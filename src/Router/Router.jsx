@@ -32,29 +32,35 @@ const myRouter = createBrowserRouter([
             element: <Login></Login>
         },
         {
-            path: '/dashboard',
-            element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
-        },
-        {
-            path: '/dashboard/createtask',
-            element: <CreateTask></CreateTask>
-        },
-        {
-            path: '/dashboard/alltask',
-            element: <AllTask></AllTask>
-        },
-        {
-            path: '/dashboard/myprofile',
-            element: <MyProfile></MyProfile>
-        },
-        {
-            path: '/alltask/update/:id',
-            element: <Update></Update>
-        },
-        {
             path: '/contact',
             element: <Contact></Contact>
         },
+    ]
+
+  },
+  {
+    path: '/dashboard',
+    element: (<PrivateRoute><Dashboard></Dashboard></PrivateRoute>),
+    children: [
+        {
+            path: 'createtask',
+            element: <CreateTask></CreateTask>
+        },
+        {
+            path: 'alltask',
+            element: <AllTask></AllTask>,
+            
+        },
+        {
+            path: 'myprofile',
+            element: <MyProfile></MyProfile>
+        },
+        {
+            path: 'alltask/update/:id',
+            element: <Update></Update>,
+            loader: ({ params }) => fetch(`http://localhost:5000/usertasks/${params.id}`),
+        },
+
     ]
 
   }

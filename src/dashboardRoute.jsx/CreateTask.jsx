@@ -1,61 +1,54 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../Components/hooks/useAxiosPublic";
 import { useContext } from "react";
 import { AuthContext } from "../Router/AuthProvider";
 
 
 const CreateTask = () => {
-    const axiosPublic = useAxiosPublic();
+    
     const { user } = useContext(AuthContext);
     const { register, handleSubmit, reset } = useForm();
-    const onSubmit = async (data) => {
-     
 
-          const bookItem = {
-            address: data.address,
-            date: data.date,
+    const onSubmit = async (data) => {
     
-            email: data.email,
-       
-            name: data.name,
-            phnno: data.phnno,
-            price: data.price,
-            receivername: data.receivername,
-            receiverphnno: data.receivername,
-            type: data.type,
-         
+        console.log(data)
+          const taskItem = {
+           date: data.date,
+           name: data.name,
+           notes: data.notes,
+           priority: data.priority,
+           title: data.title,
+            time: new Date(),
+            email: user.email
           }
+          console.log(taskItem)
         
-          axiosPublic.post('/books', bookItem)
-         .then(res => {
-            if(res.data.insertedId){
-              reset();
-                Swal.fire({
-                           position: "top-end",
-                           icon: "success",
-                           title: "Your pacel is booked",
-                           showConfirmButton: false,
-                          timer: 1500
-                       });
+          fetch('http://localhost:5000/tasks', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(taskItem)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(data.insertedId){
+                reset()
+              Swal.fire({
+                title: "Congratulation",
+                text: "You successfully assigned a task!",
+                icon: "success"
+              });
             }
-         })
+          })
        
       };
     return (
         <div className="mb-20">
-            <h1 className="text-center my-12 text-xl uppercase lg:font-bold md:font-semibold md:text-3xl lg:5xl">Create A task</h1>
+            <h1 className="text-center my-12 uppercase font-bold text-3xl lg:5xl">Create A task</h1>
             <div data-aos="zoom-in-up" data-aos-duration="2500" className='mt-12 bg-lime-200 shadow-lg rounded-lg p-5'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text">
-               User email
-              </span>
-            </label>
-            <input type="email" defaultValue={user?.email} readOnly placeholder="User email"{...register("email", { required: true})}
-            className="input input-bordered input-warning w-full" />
-          </div>
+         
          <div className="flex w-full gap-4 my-6">
          <div className="flex-1">
          <label className="label">
@@ -77,6 +70,7 @@ const CreateTask = () => {
           </div>
          </div>
          
+         <div className="flex w-full gap-4 my-6">
          <div className="flex-1">
          <label className="label">
               <span className="label-text">
@@ -98,7 +92,16 @@ const CreateTask = () => {
             <option value="low">Low</option>
         </select>
         </div>
-        
+         </div>
+         <div className="w-full lg:w-1/2">
+        <label className="label">
+            <span className="label-text">
+            Additional Notes
+            </span>
+        </label>
+        <textarea {...register("notes")} className="textarea textarea-bordered textarea-warning w-full" rows="4"></textarea>
+        </div>
+                
        
          <button className="btn bg-gray-200 btn-outline border-orange-500 border-0 border-b-4 mt-4">Book Now</button>
         </form>
