@@ -7,9 +7,14 @@ import { GiNotebook } from "react-icons/gi";
 
 
 const AllTask = () => {
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  console.log(selectedUserId)
     const { user } = useContext(AuthContext);
-    const [allTask, setAllTask] = useState('')
+    const [allTask, setAllTask] = useState([])
     console.log(allTask)
+
+    const data = allTask.filter((data) => data._id === selectedUserId)
+    console.log(data)
     
 useEffect(() => {
         const url = `http://localhost:5000/usertasks?email=${user?.email}` ;
@@ -105,8 +110,43 @@ useEffect(() => {
                   
                 </td>
                <td>
+             <div>
+                   <button
+              onClick={() => {
+                document.getElementById('my_modal_3').showModal();
+                setSelectedUserId(item._id);
+              }}
+              className="btn btn-outline btn-warning"
+            >Details</button>
+                <dialog id="my_modal_3" className="modal">
+                  <div className="modal-box">
 
+                 <div className="flex justify-end">
+                 <button onClick={() => document.getElementById('my_modal_3').close()} className="btn btn-warning">Close</button>
+                 </div>
+                 {
+                  data.map((i) => (
+                    <div key={i._id} className="text-start">
+                    <div className="text-center text-xl uppercase font-semibold mb-5">{i.title}</div>
+                 <div className="flex justify-between mb-3">
+                 <div><span className="font-semibold">Creator Name:</span> {i.name}</div>
+                    <div><span className="font-semibold">Creator Email: </span>{i.email}</div>
+                 </div>
+                    <div className="flex justify-between mb-3">
+                    <div><span className="font-semibold">Create Time: </span>{i.time}</div>
+                    <div className="text-red-600"><span className="font-semibold"> Deadlines: </span>{i.date}</div>
+                    </div>
+                    <div className="font-bold text-green-600 mb-2">Priority: {i.priority}</div>
+                    <div> <span className="font-bold">Description: </span> {i.notes}</div>
+                   
 
+                  </div>
+                  ))
+                 }
+                
+                  </div>
+                </dialog>
+                </div>
                </td>
                
                 <td>

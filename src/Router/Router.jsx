@@ -9,7 +9,6 @@ import Contact from "../Layouts/Pages/Contact";
 import PrivateRoute from "./PrivateRoute";
 import CreateTask from "../dashboardRoute.jsx/CreateTask";
 import AllTask from "../dashboardRoute.jsx/AllTask";
-import MyProfile from "../dashboardRoute.jsx/MyProfile";
 import Update from "../dashboardRoute.jsx/Update";
 
 
@@ -50,10 +49,6 @@ const myRouter = createBrowserRouter([
             path: 'alltask',
             element: <AllTask></AllTask>,
             
-        },
-        {
-            path: 'myprofile',
-            element: <MyProfile></MyProfile>
         },
         {
             path: 'alltask/update/:id',

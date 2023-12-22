@@ -3,7 +3,7 @@ import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import { useContext } from "react";
 import { AuthContext } from "../../Router/AuthProvider";
-import { FaBook, FaImage, FaProductHunt } from "react-icons/fa";
+import { FaBook, FaProductHunt } from "react-icons/fa";
 
 
 
@@ -41,18 +41,12 @@ const Dashboard = () => {
                                      <p className="text-gray-600 ">{user.email}</p>
                                      <p className="pt-3 font-medium">task management dashboard</p>
 
-                             
                          </div>
                      </div>
                      <hr className='border-2 mb-5 border-black' />
 
-                     
-
-                     
                      <li> <Link to="/dashboard/createtask"><FaBook></FaBook> Create New Task</Link> </li>
                          <li className="my-2"> <Link to="/dashboard/alltask"><FaProductHunt></FaProductHunt>See Previous Tasks</Link> </li>
-                         <li> <Link to="/dashboard/profile"><FaImage></FaImage> My Profile</Link> </li>
-
                  </ul>
 
              </div>

@@ -1,6 +1,6 @@
 import { Link} from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
-import Dashboard from '../Layouts/Pages/Dashboard';
+
 
 
 const Banner = () => {
